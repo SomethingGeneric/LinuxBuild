@@ -6,20 +6,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Get build requirements
-        run: sudo apt install build-essential -y
       - name: Get source
-        run: git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git && cd linux
+        run: git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+      - name: Move to source
+        run: cd linux
+      - name: Make Mr. Proper (clean)
+        run: make mrproper
       - name: Setup defconfig
-        run: make defconfig
-      - name: Clean
-        run: make clean
+        run: echo "We're using my defconfig from Arch" && sudo apt install wget -y && wget https://raw.githubusercontent.com/SomethingGeneric/LinuxBuild/main/config .config
       - name: Build
-        run: make -j $(getconf _NPROCESSORS_ONLN) deb-pkg LOCALVERSION=-custom && cd ../
+        run: make -j $(nproc)
+      - name: Build modules
+        run: make -j $(nproc) modules
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            *.deb
+            arch/x86_64/boot/*
+            System.map
+            drivers/acpi/*.ko
+            net/ipv6/netfilter/*.ko
+            net/ipv4/netfilter/*.ko
+            net/netfilter/*.ko
+            fs/efivars/*.ko
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
