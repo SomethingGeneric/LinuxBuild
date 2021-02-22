@@ -10,8 +10,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Show directory
+        run: pwd
       - name: Make sure there are no changes
-        run: pwd && git pull
+        run: git pull
       - name: Make Mr. Proper (clean)
         run: make mrproper
       - name: Setup defconfig
