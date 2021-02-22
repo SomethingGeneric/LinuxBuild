@@ -2,18 +2,20 @@ name: Build Kernel
 
 on: [push]
 
+defaults:
+  run:
+    working-directory: ./linux
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Get source
-        run: git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
-      - name: Move to source
-        run: cd linux
+      - name: Make sure there are no changes
+        run: pwd && git pull
       - name: Make Mr. Proper (clean)
         run: make mrproper
       - name: Setup defconfig
-        run: echo "We're using my defconfig from Arch" && sudo apt install wget -y && wget https://raw.githubusercontent.com/SomethingGeneric/LinuxBuild/main/config .config
+        run: make defconfig
       - name: Build
         run: make -j $(nproc)
       - name: Build modules
