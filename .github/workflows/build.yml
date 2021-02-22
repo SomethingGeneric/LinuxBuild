@@ -12,17 +12,17 @@ jobs:
     steps:
       - name: Get repo
         uses: actions/checkout@v2
-      - name: Ensure build requirements
+      - name: Get needed build dependencies
         run: sudo apt install build-essential libelf-dev -y
-      - name: Make Mr. Proper (clean)
+      - name: Make Mr. Proper (clean any build artifacts)
         run: make mrproper
-      - name: Setup defconfig
+      - name: Setup default x86 settings
         run: make defconfig
       - name: Build
-        run: make -j $(nproc)
+        run: echo "$(nproc) processors" && make -j $(nproc)
       - name: Build modules
         run: make -j $(nproc) modules
-      - name: Release
+      - name: Release output files
         uses: softprops/action-gh-release@v1
         with:
           files: |
