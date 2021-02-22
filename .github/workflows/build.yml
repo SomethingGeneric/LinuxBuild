@@ -18,7 +18,7 @@ jobs:
       - name: Show directory
         run: ls
       - name: Get source
-        run: git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+        run: git init && git remote add origin git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git && git fetch && git checkout origin/master -ft
       - name: Get needed build dependencies
         run: sudo apt install build-essential libelf-dev -y
       - name: Make Mr. Proper (clean any build artifacts)
