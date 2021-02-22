@@ -17,6 +17,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Show directory
         run: ls
+      - name: Make sure upstream is good
+        run: git pull
       - name: Get needed build dependencies
         run: sudo apt install build-essential libelf-dev -y
       - name: Make Mr. Proper (clean any build artifacts)
