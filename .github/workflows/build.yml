@@ -9,11 +9,9 @@ jobs:
       - name: Get build requirements
         run: sudo apt install build-essential -y
       - name: Get source
-        run: git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
-      - name: Get existing config
-        run: cp /boot/config-$(uname -r) .config
-      - name: Accept any config changes
-        run: yes '' | make oldconfig
+        run: git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git && cd linux
+      - name: Setup defconfig
+        run: make defconfig
       - name: Clean
         run: make clean
       - name: Build
