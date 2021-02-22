@@ -13,10 +13,10 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
-      - name: Show directory
-        run: ls
       - name: Get repo
         uses: actions/checkout@v2
+      - name: Show directory
+        run: ls
       - name: Get needed build dependencies
         run: sudo apt install build-essential libelf-dev -y
       - name: Make Mr. Proper (clean any build artifacts)
