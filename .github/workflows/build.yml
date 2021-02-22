@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Show directory
-        run: pwd
+        run: ls
       - name: Make sure there are no changes
         run: git pull
       - name: Make Mr. Proper (clean)
