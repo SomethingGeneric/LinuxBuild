@@ -35,7 +35,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            linux/arch/x86/boot/*
+            linux/arch/x86/boot/bzImage
             linux/System.map
             linux/drivers/acpi/*.ko
             linux/net/ipv6/netfilter/*.ko
