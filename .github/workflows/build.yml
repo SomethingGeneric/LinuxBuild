@@ -1,13 +1,16 @@
 name: Build Kernel
 
-on: [push]
+on:
+  push:
+    tags:
+      - 'v*.*.*'
 
 defaults:
   run:
     working-directory: ./linux
 
 jobs:
-  build:
+  Build:
     runs-on: ubuntu-latest
     steps:
       - name: Get repo
